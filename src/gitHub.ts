@@ -1,6 +1,5 @@
 import "dotenv/config";
 import { Octokit } from "octokit";
-import { NumberFormat } from "xlsx";
 
 const printProgress = (page: number) => {
   process.stdout.write(`Page: ${page} completed\r`);
