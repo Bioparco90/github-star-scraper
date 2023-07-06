@@ -1,0 +1,29 @@
+{
+  "name": "github-star-scraper",
+  "version": "1.0.0",
+  "description": "A program to get the profile's information of people that starred a particular repo",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bioparco90/github-star-scraper.git"
+  },
+  "keywords": [
+    "github",
+    "profiles",
+    "star"
+  ],
+  "author": "Marco Monni",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Bioparco90/github-star-scraper/issues"
+  },
+  "homepage": "https://github.com/Bioparco90/github-star-scraper#readme",
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  }
+}
