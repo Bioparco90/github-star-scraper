@@ -1,14 +1,13 @@
 import { utils, writeFile, WorkBook, WorkSheet } from "xlsx";
+import { getStargazers } from "./gitHub";
 import path from "path";
-import fs from "fs";
 
-export const createSheetFile = (): void => {
+export const createSheetFile = async () => {
   // Crea un nuovo workbook
   const workbook: WorkBook = utils.book_new();
 
   // Utilizzo JSON
-  const jsonData: Buffer = fs.readFileSync("data.json");
-  const data: any[] = JSON.parse(jsonData.toString());
+  const data = await getStargazers();
   const worksheet: WorkSheet = utils.json_to_sheet(data);
 
   // Aggiungi il foglio di lavoro al workbook

@@ -6,6 +6,12 @@ import { getToken, getStargazers } from "./gitHub";
 // createSheetFile();
 // const token: string | undefined = getToken();
 // console.log(token);
-getStargazers();
+// const fun1 = async () => {
+//   const data = await getStargazers();
+//   console.log(data);
+// };
+// fun1();
+
+createSheetFile();
 
 /* END DEBUG AREA */

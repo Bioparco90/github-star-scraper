@@ -20,8 +20,8 @@ export const getStargazers = async () => {
   let dataFetched = 100;
   while (dataFetched >= 100) {
     const data = await octokit.request("GET /repos/{owner}/{repo}/stargazers", {
-      owner: "BetterDiscord",
-      repo: "BetterDiscord",
+      owner: "LoreBadTime",
+      repo: "8088-easy-builder",
       page: page,
       per_page: 100,
       headers: {
