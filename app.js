@@ -1,16 +1,14 @@
 import { utils, writeFile } from "xlsx";
 import path from "path";
+import fs from "fs"
 
 // Crea un nuovo workbook
 const workbook = utils.book_new();
 
-// Crea un nuovo foglio di lavoro
-const worksheet = utils.aoa_to_sheet([
-  ["Nome", "Cognome", "Età"],
-  ["Mario", "Rossi", 30],
-  ["Laura", "Bianchi", 25],
-  ["Luca", "Verdi", 35],
-]);
+// Utilizzo JSON
+const jsonData = fs.readFileSync("data.json");
+const data = JSON.parse(jsonData)
+const worksheet = utils.json_to_sheet(data)
 
 // Aggiungi il foglio di lavoro al workbook
 utils.book_append_sheet(workbook, worksheet, "Dati");
