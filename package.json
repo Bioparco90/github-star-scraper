@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "A program to get the profile's information of people that starred a particular repo",
   "main": "app.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node dist/app.js",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,10 @@
   },
   "homepage": "https://github.com/Bioparco90/github-star-scraper#readme",
   "dependencies": {
+    "typescript": "^5.1.6",
     "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.0"
   }
 }
