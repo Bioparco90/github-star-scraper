@@ -1,5 +1,5 @@
 import { utils, writeFile, WorkBook, WorkSheet } from "xlsx";
-import { getStargazers } from "./gitHub";
+import { getUsersInfo } from "./gitHub";
 import path from "path";
 
 export const createSheetFile = async () => {
@@ -7,7 +7,7 @@ export const createSheetFile = async () => {
   const workbook: WorkBook = utils.book_new();
 
   // Utilizzo JSON
-  const data = await getStargazers();
+  const data = await getUsersInfo();
   const worksheet: WorkSheet = utils.json_to_sheet(data);
 
   // Aggiungi il foglio di lavoro al workbook

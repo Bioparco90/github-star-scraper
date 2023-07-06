@@ -9,12 +9,12 @@ export const getToken = (): string | undefined => {
   return process.env.GITHUB_TOKEN;
 };
 
-export const getStargazers = async () => {
-  const token = getToken();
-  const octokit = new Octokit({
-    auth: token,
-  });
+const token = getToken();
+const octokit = new Octokit({
+  auth: token,
+});
 
+export const getStargazers = async () => {
   let page: number = 1;
   let stargazers: any[] = [];
   let dataFetched = 100;
@@ -34,6 +34,56 @@ export const getStargazers = async () => {
     page++;
   }
   console.log(`\n${stargazers.length} results found`);
-  
+
   return stargazers;
+};
+
+export const getUsersInfo = async () => {
+  const stargazers = await getStargazers();
+  const usernames: string[] = stargazers.map((elem) => elem.login);
+
+  const request = usernames.map(async (username) => {
+    const { data } = await octokit.request("GET /users/{username}", {
+      username: username,
+      headers: {
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+    });
+
+    const dataOrg = await octokit.request(
+      "GET /users/{username}/hovercard?subject_type=organization",
+      {
+        username: username,
+        headers: {
+          "X-GitHub-Api-Version": "2022-11-28",
+        },
+      }
+    );
+
+    const dataSocial = await octokit.request(
+      "GET /users/{username}/social_accounts",
+      {
+        username: username,
+        headers: {
+          "X-GitHub-Api-Version": "2022-11-28",
+        },
+      }
+    );
+    const social_accounts = dataSocial.data.map((elem) => elem.url);
+    console.log("Data Social", social_accounts);
+
+    return {
+      Id: data.id,
+      Nickname: data.login,
+      FullName: data.name,
+      Email: data.email,
+      Followers: data.followers,
+      Location: data.location,
+      Organization: dataOrg.data.contexts[0]?.message,
+      Social: social_accounts,
+    };
+  });
+  const users = await Promise.all(request);
+  console.log(users);
+  return users;
 };
