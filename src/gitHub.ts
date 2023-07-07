@@ -1,11 +1,22 @@
+import fs from "fs";
+import path from "path";
 import "dotenv/config";
 import { Octokit } from "octokit";
+
+const getUserRepoToFetch = () => {
+  // Leggi il contenuto del file JSON
+  const pathFile = path.join(process.cwd(), "credentials.json");
+  console.log(pathFile)
+  const jsonData = fs.readFileSync(pathFile);
+  const data = JSON.parse(jsonData.toString());
+  return data;
+};
 
 const printProgress = (page: number) => {
   process.stdout.write(`Page: ${page} completed\r`);
 };
 
-export const getToken = (): string | undefined => {
+const getToken = (): string | undefined => {
   return process.env.GITHUB_TOKEN;
 };
 
@@ -14,14 +25,15 @@ const octokit = new Octokit({
   auth: token,
 });
 
-export const getStargazers = async () => {
+const getStargazers = async () => {
+  const { owner, repo } = getUserRepoToFetch();
   let page: number = 1;
   let stargazers: any[] = [];
   let dataFetched = 100;
   while (dataFetched >= 100) {
     const data = await octokit.request("GET /repos/{owner}/{repo}/stargazers", {
-      owner: "LoreBadTime",
-      repo: "8088-easy-builder",
+      owner: owner,
+      repo: repo,
       page: page,
       per_page: 100,
       headers: {
@@ -69,8 +81,7 @@ export const getUsersInfo = async () => {
         },
       }
     );
-    const social_accounts = dataSocial.data.map((elem) => elem.url);
-    console.log("Data Social", social_accounts);
+    const social_accounts = dataSocial.data.map((elem) => elem.url).join("\n");
 
     return {
       Id: data.id,
